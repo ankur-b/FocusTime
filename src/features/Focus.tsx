@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { Dispatch, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 import RoundedButton from "../components/RoundedButton";
 import { colors } from "../utils/colors";
-
-const Focus = (props: {}) => {
+import { spacing } from "../utils/sizes";
+const Focus = ({addSubject}: FocusProps) => {
     const [subject, setSubject] = useState("")
     return (
         <View style={styles.container}>
@@ -15,7 +15,7 @@ const Focus = (props: {}) => {
                     label="What would you like to focus on?"
                 />
                 <View style={styles.button}>
-                    <RoundedButton title="+" size={50} />
+                    <RoundedButton title="+" size={50} onPress={()=>addSubject(subject)} />
                 </View>
             </View>
         </View>
@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        marginRight: 25,
+        marginRight: spacing.md,
     }        ,
     inputContainer: {
-        padding: 20,
+        padding: spacing.lg,
         flexDirection: 'row',
     },
     button: {
@@ -41,3 +41,7 @@ const styles = StyleSheet.create({
     }
 })
 export default Focus
+
+type FocusProps  = {
+    addSubject: Dispatch<String>
+}
