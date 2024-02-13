@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-
+import React, { useState,Dispatch,SetStateAction,useEffect } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import { fontSizes, spacing } from '../utils/sizes';
 import { colors } from '../utils/colors';
 
-const minutesToMillis = (min) => min * 1000 * 60;
-const formatTime = (time) => (time < 10 ? `0${time}` : time);
-export const Countdown = ({ minutes = 0.1, isPaused, onProgress, onEnd }) => {
-  const interval = React.useRef(null);
-  const [millis, setMillis] = useState(null);
+const minutesToMillis = (min:number) => min * 1000 * 60;
+const formatTime = (time:number) => (time < 10 ? `0${time}` : time);
+export const Countdown = ({ minutes = 0.1, isPaused, onProgress, onEnd }:CountdownProps) => {
+  const interval = React.useRef<ReturnType<typeof setInterval> | number>();
+  const [millis, setMillis] = useState<number>(0);
   const countDown = () => {
     setMillis((time) => {
       if (time === 0) {
@@ -58,3 +57,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(94, 132, 226, 0.3)',
   },
 });
+
+type CountdownProps = {
+  minutes:number
+  isPaused:boolean
+  onProgress:Dispatch<SetStateAction<number>>
+  onEnd:()=>void
+}
