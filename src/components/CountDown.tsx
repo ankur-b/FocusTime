@@ -8,11 +8,14 @@ const formatTime = (time:number) => (time < 10 ? `0${time}` : time);
 export const Countdown = ({ minutes = 0.1, isPaused, onProgress, onEnd }:CountdownProps) => {
   const interval = React.useRef<ReturnType<typeof setInterval> | number>();
   const [millis, setMillis] = useState<number>(0);
+
+  const reset = () =>setMillis(minutesToMillis(millis))
+
   const countDown = () => {
     setMillis((time) => {
       if (time === 0) {
         clearInterval(interval.current);
-        onEnd();
+        onEnd(reset);
         return time;
       }
       const timeLeft = time - 1000;
@@ -62,5 +65,5 @@ type CountdownProps = {
   minutes:number
   isPaused:boolean
   onProgress:Dispatch<SetStateAction<number>>
-  onEnd:()=>void
+  onEnd:(reset:()=>void)=>void
 }
