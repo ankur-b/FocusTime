@@ -5,13 +5,13 @@ import { useState } from 'react';
 import { Timer } from './src/features/Timer';
 
 export default function App() {
-  const [currentSubject, setCurrentSubject] = useState<String>("")
+  const [currentSubject, setCurrentSubject] = useState<String|null>("")
   return (
     <SafeAreaView style={styles.container}>
       {!currentSubject ? <Focus addSubject={setCurrentSubject} /> : <Timer
         focusSubject={currentSubject}
         onTimerEnd={()=>{}}
-        clearSubject={()=>{}}
+        clearSubject={()=>setCurrentSubject(null)}
       />}
     </SafeAreaView>
   );
